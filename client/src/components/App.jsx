@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import List from './List.jsx';
-import Search from './Search.jsx'
+import Search from './Search.jsx';
+import SearchList from './SearchList.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -14,6 +15,7 @@ class App extends React.Component {
       searchTerm: null,
     }
     this.handleSearch = this.handleSearch.bind(this);
+    this.handleClear = this.handleClear.bind(this);
   }
 
   componentDidMount() {
@@ -35,7 +37,7 @@ class App extends React.Component {
     const searchTerm = search.searchTerm;
     const value = search.value;
 
-    axios.get(`http://localhost:30001/api/${searchTerm}/${value}/search`)
+    axios.get(`http://localhost:3000/api/${searchTerm}/${value}/search`)
       .then((results) => {
         this.setState({
           searchList: results.data
@@ -46,12 +48,23 @@ class App extends React.Component {
       });
   }
 
+  handleClear() {
+    this.setState({
+      searchList: []
+    });
+  }
+
   render () {
-    return (<div>
-      <h1>Hop Swap!</h1>
-      <Search handleSearch={this.handleSearch}/>
-      <List className="list" beers={this.state.beerList}/>
-    </div>)
+    return (
+      <div>
+        <h1>Hop Swap!</h1>
+        <Search handleSearch={this.handleSearch}/>
+        {this.state.searchList.length ?
+          <SearchList className="search_list" results={this.state.searchList}   handleClear={this.handleClear}/> :
+          <List className="list" beers={this.state.beerList}/>
+        }
+      </div>
+    )
   }
 }
 

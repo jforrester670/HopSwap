@@ -6,7 +6,7 @@ class Search extends React.Component {
     super(props);
     this.state = {
       value: '',
-      searchTerm: 'name',
+      searchTerm: 'beer_name',
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -32,12 +32,12 @@ class Search extends React.Component {
       <div className="search">
         <form onSubmit={this.handleSubmit}>
           <p>
-             <label>Select by: </label>
+             <label>Search by: </label>
              <select id = "searchTerms" onChange={this.change}>
-               <option value = "name">Name</option>
-               <option value = "food_pairing">Food Pairing</option>
-               <option value = "abv">ABV</option>
-               <option value = "ibu">IBU</option>
+               <option value = "beer_name">Name</option>
+               <option value = "food">Food Pairing</option>
+               <option value = "abv_gt">ABV Greater than</option>
+               <option value = "ibu_lt">IBU Less than</option>
              </select>
           </p>
           <input type='text' placeholder='Search... ' value={this.state.value} onChange={this.handleChange}></input>

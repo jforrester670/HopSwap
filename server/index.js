@@ -24,7 +24,29 @@ app.get('/api/:user/beerlist', function (req, res) {
 });
 
 app.get('/api/:searchTerm/:value/search', function (req, res) {
-  axios.get()
-})
+  const searchTerm = req.params.searchTerm;
+  const value = req.params.value;
+  let searchList = [];
+
+  axios.get(`https://api.punkapi.com/v2/beers?${searchTerm}=${value}`)
+    .then((results) => {
+      console.log(`https://api.punkapi.com/v2/beers?${searchTerm}=${value}`);
+      results.data.map((listEntry => {
+        searchList.push({
+          name: listEntry.name,
+          description: listEntry.description,
+          image_url: listEntry.image_url,
+          abv: listEntry.abv,
+          ibu: listEntry.ibu,
+          food_pairing: listEntry.food_pairing,
+        });
+      }))
+      res.send(searchList);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
+});
 
 app.listen(port, () => console.log(`listening on port ${port}!`));
