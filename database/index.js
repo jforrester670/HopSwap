@@ -1,20 +1,25 @@
-var mysql = require('mysql');
+const { Pool } = require('pg');
+const config = require('./config.js');
 
-var connection = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'root',
-  password : 'FILL_ME_IN',
-  database : 'test'
-});
+const pool = new Pool(config);
 
-var selectAll = function(callback) {
-  connection.query('SELECT * FROM items', function(err, results, fields) {
+pool.connect();
+
+console.log('connected to PG');
+
+const getUserList = function(user, cb) {
+  const userName = user;
+
+  pool.query(`SELECT * FROM beerlist WHERE user_name = ${userName}`, (err, results) => {
     if(err) {
-      callback(err, null);
+      cb(err, null);
     } else {
-      callback(null, results);
+      console.log(results);
+      cb(null, results);
     }
   });
 };
 
-module.exports.selectAll = selectAll;
+module.exports = {
+  getUserList,
+};
