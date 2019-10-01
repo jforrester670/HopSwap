@@ -29,15 +29,15 @@ class Search extends React.Component {
 
   render() {
     return (
-      <div className="search">
+      <div className="align-items-center" style={{display: 'flex', justifyContent: 'center'}}>
         <form onSubmit={this.handleSubmit}>
           <p>
-             <label>Search by: </label>
+             <label style={{color: '#eff2bd'}}>Search by: </label>
              <select id = "searchTerms" onChange={this.change}>
-               <option value = "beer_name">Name</option>
-               <option value = "food">Food Pairing</option>
-               <option value = "abv_gt">ABV Greater than</option>
-               <option value = "ibu_lt">IBU Less than</option>
+               <option value="beer_name">Name</option>
+               <option value="food">Food Pairing</option>
+               <option value="abv_gt">ABV Greater than</option>
+               <option value="ibu_lt">IBU Less than</option>
              </select>
           </p>
           <input type='text' placeholder='Search... ' value={this.state.value} onChange={this.handleChange}></input>

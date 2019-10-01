@@ -35,8 +35,8 @@ const addToList = function(user, beer, cb) {
   pool.query(query, (err, success) => {
     if (err) { cb(err, null); }
     cb(null, success);
-  })
-}
+  });
+};
 
 const deleteFromList = function(beer_id, cb) {
   const id = beer_id;

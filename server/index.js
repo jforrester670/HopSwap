@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const axios = require('axios');
+const cors = require('cors');
 const db = require('../database/index.js');
 
 const app = express();
@@ -9,6 +10,7 @@ const port = 3000;
 app.use(express.static(__dirname + '/../client/dist'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
 
 app.get('/api/:user/beerlist', function (req, res) {
   const user = req.params.user;
@@ -46,7 +48,6 @@ app.get('/api/:searchTerm/:value/search', function (req, res) {
     .catch((err) => {
       console.log(err);
     });
-
 });
 
 app.post('/api/:user/add', function(req, res) {
@@ -58,7 +59,17 @@ app.post('/api/:user/add', function(req, res) {
     res.status(201);
     res.end();
   });
-})
+});
+
+app.delete('/api/:id/remove', function(req, res) {
+  const id = req.params.id;
+
+  db.deleteFromList(id, function(err, success) {
+    if (err) { res.send(err); }
+    res.status(201);
+    res.end();
+  });
+});
 
 
 app.listen(port, () => console.log(`listening on port ${port}!`));
