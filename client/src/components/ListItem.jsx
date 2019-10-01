@@ -6,6 +6,7 @@ const ListItem = (props) => (
     <div>
       { props.beer.description }
     </div>
+    <button type="submit">Remove Beer</button>
   </div>
 )
 

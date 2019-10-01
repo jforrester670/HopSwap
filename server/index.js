@@ -49,4 +49,16 @@ app.get('/api/:searchTerm/:value/search', function (req, res) {
 
 });
 
+app.post('/api/:user/add', function(req, res) {
+  const user = req.params.user;
+  const beer = req.body;
+
+  db.addToList(user, beer, function(err, success) {
+    if (err) { res.send(err); }
+    res.status(201);
+    res.end();
+  });
+})
+
+
 app.listen(port, () => console.log(`listening on port ${port}!`));

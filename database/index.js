@@ -20,6 +20,33 @@ const getUserList = function(user, cb) {
   });
 };
 
+const addToList = function(user, beer, cb) {
+  const userName = user;
+  const name = beer.name;
+  const description = beer.description;
+  const url = beer.image_url;
+  const abv = beer.abv;
+  const ibu = beer.ibu;
+  const query = {
+    text: 'INSERT INTO beerlist (user_name, name, description, image_url, abv, ibu) VALUES ($1, $2, $3, $4, $5, $6)',
+    values: [userName, name, description, url, abv, ibu],
+  };
+
+  pool.query(query, (err, success) => {
+    if (err) { cb(err, null); }
+    cb(null, success);
+  })
+}
+
+const deleteFromList = function(beer_id, cb) {
+  const id = beer_id;
+
+  pool.query(`DELETE FROM beerlist WHERE id = ${id}`, (error, success) => {
+    if (error) { cb(error, null); }
+    cb(null, success);
+  });
+};
+
 module.exports = {
-  getUserList,
+  getUserList, addToList, deleteFromList,
 };
