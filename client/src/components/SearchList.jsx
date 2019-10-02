@@ -8,10 +8,11 @@ const SearchList = (props) => (
       <h4> Search Results:</h4>
     </div>
     <div>
-      { props.results ?
+      { props.results.length ?
         props.results.map(result => <SearchItem result={result} handleAdd={props.handleAdd}/>) :
         <h5>No results found</h5>
       }
+      <button type="button" className="btn btn-primary" onClick={props.handleClear}>Back to Beer List</button>
     </div>
   </div>
 )
