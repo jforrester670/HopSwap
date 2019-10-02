@@ -79,6 +79,7 @@ class App extends React.Component {
         console.log(err);
       });
 
+    alert('Beer added to your list')
   }
 
   handleRemove(beer) {
